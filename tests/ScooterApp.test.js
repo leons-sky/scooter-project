@@ -82,7 +82,7 @@ describe('Test register and login methods', () => {
     });
 })
 
-describe('Test adding and removing a scooter', () => {
+describe('Test adding and removing a scooter and marking one as broken', () => {
     let user = new User("user", "password", 21)
 
     describe('Add scooter', () => {
@@ -115,6 +115,27 @@ describe('Test adding and removing a scooter', () => {
                 let scooter2 = new Scooter(null, user)
                 app.removeScooter(scooter2)
             }).toThrow("scooter serial number not located!")
+        });
+    });
+
+    describe('Mark scooter as broken', () => {
+        let app = new ScooterApp()
+        let scooter = new Scooter(Stations[0], user)
+
+        it('should throw the error "scooter serial number not located!" if the scooter is not in an available list', () => {
+            expect(() => {
+                app.markScooterAsBroken(scooter)
+            }).toThrow("scooter serial number not located!")
+        });
+        it('should set the scooter\'s isBroken property to true', () => {
+            app.addScooter(Stations[0], scooter)
+            app.markScooterAsBroken(scooter)
+            expect(scooter.isBroken).toBeTruthy()
+        });
+        it('should set the scooter\'s isBroken property back to false once repaired', async () => {
+            app.addScooter(Stations[0], scooter)
+            await app.markScooterAsBroken(scooter)
+            expect(scooter.isBroken).toBeFalsy()
         });
     });
 });

@@ -63,6 +63,13 @@ class ScooterApp {
 
         return "scooter has successfully been removed"
     }
+
+    markScooterAsBroken(scooter) {
+        this.removeScooter(scooter)
+        scooter.isBroken = true
+
+        return scooter.requestRepair()
+    }
 }
 
 module.exports = ScooterApp

@@ -17,7 +17,31 @@ function toBeWithinRange(actual, floor, ceiling) {
     }
 }
 
+function toBeTypeOf(actual, type) {
+    return {
+        message: () =>
+            `expected ${this.utils.printReceived(
+                actual,
+            )} to be a typeof ${this.utils.printExpected(type)}`,
+        pass: typeof actual == type,
+    }
+}
+
+function toBeAnArray(actual) {
+    return {
+        message: () =>
+            `expected ${this.utils.printReceived(
+                actual,
+            )} to be an Array`,
+        pass: Array.isArray(actual),
+    }
+}
+
 expect.extend({
     toBeIn,
-    toBeWithinRange
+    toBeWithinRange,
+    toBeTypeOf,
+    toBeAnArray
 })
+
+test("No test", () => { })

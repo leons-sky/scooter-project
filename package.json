@@ -7,10 +7,10 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "jest ./tests --coverage --runInBand",
-    "test:user": "jest ./tests/User.test.js --runInBand",
-    "test:scooter": "jest ./tests/Scooter.test.js --runInBand",
-    "test:scooterapp": "jest ./tests/ScooterApp.test.js --runInBand"
+    "test": "jest ./tests --coverage --verbose --runInBand",
+    "test:user": "jest ./tests/User.test.js -verbose --runInBand",
+    "test:scooter": "jest ./tests/Scooter.test.js -verbose --runInBand",
+    "test:scooterapp": "jest ./tests/ScooterApp.test.js -verbose --runInBand"
   },
   "author": "Leon Semmens",
   "license": "ISC",

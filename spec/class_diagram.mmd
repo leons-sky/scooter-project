@@ -16,9 +16,9 @@ classDiagram
         +boolean isBroken
         +boolean docked
         +rent()
-        +dock(station)
-        +recharge()
-        +requestRepair()
+        +dock(station, distanceTravelled)
+        +async recharge()
+        +async requestRepair()
     }
 
     class User {
@@ -36,4 +36,5 @@ classDiagram
         +logIn(username, password)
         +addScooter(location, scooter)
         +removeScooter(scooterToRemove)
+        +markScooterAsBroken(scooter)
     }

@@ -110,7 +110,7 @@ describe('Test adding and removing a scooter and marking one as broken', () => {
             expect(app.stations[Stations[0]]).toEqual([])
         });
         it('should throw the error "scooter serial number not located!" if the scooter has not been previously added', () => {
-            app.stations[Stations[0]].push(new Scooter(Stations[0], user))
+            app.stations[Stations[0]].push(new Scooter(Stations[0], user)) // for 100% coverage
             expect(() => {
                 let scooter2 = new Scooter(null, user)
                 app.removeScooter(scooter2)

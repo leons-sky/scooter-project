@@ -25,6 +25,9 @@ describe('Check scooter object', () => {
     it('should have a charge property in range [1, 100]', () => {
         expect(scooter.charge).toBeWithinRange(1, 100)
     });
+    it('should have a max range of 32', () => {
+        expect(scooter.maxRange).toBe(32 * (scooter.charge / 100))
+    });
     it('should have a isBroken bool defaulted to false', () => {
         expect(scooter.isBroken).toBeFalsy()
     });
@@ -45,8 +48,8 @@ describe('Test scooter renting and docking', () => {
             scooter.charge = 100
             expect(scooter.rent()).toBe("Enjoy the ride!")
         });
-        it('should return "Scooter low on battery, please charge." if charge is less than or equal to 20', () => {
-            scooter.charge = 20
+        it('should return "Scooter low on battery, please charge." if charge is less than 100', () => {
+            scooter.charge = 56
             expect(scooter.rent()).toBe("Scooter low on battery, please charge.")
         });
         it('should return "Scooter is broken, please send a repair request." if scooter is broken', () => {
@@ -58,7 +61,7 @@ describe('Test scooter renting and docking', () => {
 
     describe('Dock method', () => {
         it('should set the scooter\'s station property to the passed argument', () => {
-            scooter.dock(Stations[3])
+            scooter.dock(Stations[3], 0)
             expect(scooter.station).toBe(Stations[3])
         });
         it('should throw an error of "Docking station required!" if no station is provided', () => {
@@ -67,12 +70,29 @@ describe('Test scooter renting and docking', () => {
             }).toThrow("Docking station required!")
         });
         it('should set the docked property to true', () => {
-            scooter.dock(Stations[3])
+            scooter.dock(Stations[3], 0)
             expect(scooter.docked).toBeTruthy()
         });
         it('should set current user to an empty string', () => {
-            scooter.dock(Stations[3])
+            scooter.dock(Stations[3], 0)
             expect(scooter.user).toBe("")
+        });
+
+        it('charge should be at 50 after travelling 16km', () => {
+            scooter.charge = 100
+            scooter.maxRange = 32
+
+            scooter.dock(Stations[2], 16)
+            console.log(scooter.maxRange)
+            expect(scooter.charge).toBe(50)
+        });
+        it('should throw error "Max range was exceeded" after travelling another 17km', () => {
+            scooter.charge = 50
+            scooter.maxRange = 16
+
+            expect(() => {
+                scooter.dock(Stations[4], 17)
+            }).toThrow("Max range was exceeded")
         });
     });
 });
@@ -95,4 +115,8 @@ describe('Test recharge and repair methods', () => {
         await scooter.requestRepair()
         expect(scooter.isBroken).toBeFalsy()
     });
+});
+
+describe('Test for range of scooter', () => {
+
 });

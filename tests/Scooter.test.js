@@ -42,6 +42,7 @@ describe('Test scooter renting and docking', () => {
 
     describe('Rent method', () => {
         it('should return "Enjoy the ride!" if all conditions are met', () => {
+            scooter.charge = 100
             expect(scooter.rent()).toBe("Enjoy the ride!")
         });
         it('should return "Scooter low on battery, please charge." if charge is less than or equal to 20', () => {
@@ -65,11 +66,11 @@ describe('Test scooter renting and docking', () => {
             }).toThrow("Docking station required!")
         });
         it('should set the docked property to true', () => {
-            scooter.dock(Station[3])
+            scooter.dock(Stations[3])
             expect(scooter.docked).toBeTruthy()
         });
         it('should set current user to an empty string', () => {
-            scooter.dock(Station[3])
+            scooter.dock(Stations[3])
             expect(scooter.user).toBe("")
         });
     });

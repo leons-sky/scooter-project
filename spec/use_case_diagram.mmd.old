@@ -1,0 +1,69 @@
+flowchart TD
+    SYSTEM((System))
+    SYSTEM -.-> SA1
+    R4 -.->|user has been registered| SYSTEM 
+    SR2 -.->|scooter not found| SYSTEM
+    USER((User))
+    USER --> R1
+    USER --> L1
+    USER --> RENT1
+    RENT4 -.->|Enjoy the ride!| USER
+    RENT2 -.->|Scooter is broken, please send a repair request.| USER
+    RENT3 -.->|Scooter low on battery, please charge.| USER
+    R2 -.->|already registered!| USER
+    R3 -.->|too young to register!| USER
+    L4 -.-> USER
+    L3 -.->|Successful login| USER
+    USER --> DOCK
+    DOCK --> SA1
+    subgraph app [ScooterApp]
+        R1[Register]:::func
+        R2{{Is user already registered?}}:::if
+        R3{{Is user 18 or older?}}:::if
+        R4[/Register user\]:::proc
+        USERS(Registered Users)
+        R1 --> R2
+        R2 -.- USERS
+        R2 --> R3
+        R3 --> R4
+        R4 -->|add user| USERS
+        L1[Login]:::func
+        L2{{Is user already registered?}}:::if
+        L3{{Does password match?}}:::if
+        L4[/Username or password is incorrect./]
+        L1 --- L2
+        L2 -.- USERS
+        L2 --> L3
+        L2 -.-> L4
+        L3 -.-> L4
+        STATIONS(Stations)
+        SA1[Add scooter]:::func
+        SA2[/Add scooter to station\]:::proc
+        SA1 --> SA2
+        SA2 -->|Add scooter| STATIONS
+        SR1[Remove scooter]:::func
+        SR2[/Search for scooter\]:::proc
+        SR3[/Remove scooter from station\]:::proc
+        SR1 --> SR2
+        SR2 -.- STATIONS
+        SR2 --> SR3
+        SR3 -->|Remove scooter| STATIONS
+    end
+    SA2 -->|Set station| STATION
+    SR3 -->|Remove station| STATION
+    subgraph scooter [Scooter]
+        STATION(Station)
+        SUSER(User)
+        RENT1[Rent]:::func
+        RENT2{{Is broken?}}:::if
+        RENT3{{Is the scooter charged to 20%?}}:::if
+        RENT4[/Take scooter\]:::proc
+        RENT1 --> RENT2
+        RENT2 --> RENT3
+        RENT3 --> RENT4
+        DOCK[Dock]:::func
+    end
+
+    classDef func fill:lightblue
+    classDef if fill:pink
+    classDef proc fill:lime

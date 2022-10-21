@@ -1,0 +1,41 @@
+sequenceDiagram
+    actor User
+    actor Scooter
+    Scooter ->> ScooterApp: Add scooter to location
+    User ->>+ ScooterApp: Register
+    break When registration requirements are not met
+        alt User is already registered
+            ScooterApp -->> User: already registered!
+        else User is underage
+            ScooterApp -->> User: too young to register!
+        end
+    end
+    ScooterApp -->>- User: Registered
+    User ->>+ ScooterApp: Login
+    break When login fails
+        ScooterApp -->> User: Username or password is incorrect.
+    end
+    ScooterApp -->>- User: Successful login
+    User ->>+ Scooter: Rent
+    break Cannot rent scooter
+        alt Scooter is broken
+            Scooter -->> User: Scooter is broken, please send a repair request.
+        else
+            Scooter -->> User: Scooter low on battery, please charge.
+        end
+    end
+    opt Scooter needs charging
+        ScooterApp ->>+ Scooter: Recharge
+        Scooter -->>- ScooterApp: Fully charged
+    end
+    Scooter ->> ScooterApp: Remove scooter from location
+    ScooterApp -->> Scooter: Removed from location
+    Scooter -->>- User: Rented
+    User ->>+ Scooter: Dock at station
+    Scooter ->> ScooterApp: Add scooter to station
+    ScooterApp -->> Scooter: Added to station
+    Scooter -->>- User: Scooter docked
+    opt Scooter is broken
+        ScooterApp ->>+ Scooter: Request repair
+        Scooter -->>- ScooterApp: Repaired
+    end

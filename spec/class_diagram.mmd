@@ -1,0 +1,38 @@
+classDiagram
+    User "1" --o "1" Scooter
+    User "*" --* "1" ScooterApp
+    User -- ScooterApp: register
+    User -- ScooterApp: login
+    Scooter "*" --o "1" ScooterApp
+    User -- Scooter: rent
+    User -- Scooter: dock
+
+    class Scooter {
+        +string Station
+        +User user
+        +number serial
+        +number charge
+        +boolean isBroken
+        +boolean docked
+        +rent()
+        +dock(station)
+        +recharge()
+        +requestRepair()
+    }
+
+    class User {
+        +string username
+        +string password
+        +number age
+    }
+
+    class ScooterApp {
+        +Dictionary~Array~ stations
+        +Array~User~ registeredUsers
+        +Dictionary~Array~ stations
+        static Array~Scooter~ scooterSessions
+        +register(user)
+        +logIn(username, password)
+        +addScooter(location, scooter)
+        +removeScooter(scooterToRemove)
+    }

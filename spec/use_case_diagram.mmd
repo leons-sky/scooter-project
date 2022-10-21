@@ -1,15 +1,19 @@
-flowchart TD
+flowchart LR
     USER((User))
     USER --> R1
     USER --> L1
     USER --> RENT
     RENT -.->|Enjoy the ride!| USER
+    R1 -.->|Successfully registered| USER
     L1 -.->|Successful login| USER
     USER --> DOCK
     DOCK --> SA1
     RENT --> SR1
     SR1 -.- STATION
     SA1 -.- STATION
+    USER --> MSAB
+    
+    MSAB --> RR
     subgraph app [ScooterApp]
         R1[Register]:::func
         USERS(Registered Users)
@@ -21,12 +25,15 @@ flowchart TD
         SA1 -->|Add scooter| STATIONS
         SR1[Remove scooter]:::func
         SR1 -->|Remove scooter| STATIONS
+        MSAB[Mark scooter as broken]:::func
     end
     subgraph scooter [Scooter]
         STATION(Station)
         SUSER(User)
         RENT[Rent]:::func
         DOCK[Dock]:::func
+        CHG[Recharge]:::func
+        RR[Request repair]:::func
         RENT -->|Set user| SUSER
         DOCK -->|Remove user| SUSER
     end

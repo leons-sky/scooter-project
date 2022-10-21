@@ -1,0 +1,17 @@
+{
+  "name": "scooter-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/ScooterApp.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Leon Semmens",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.2.1"
+  }
+}

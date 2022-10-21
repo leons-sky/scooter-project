@@ -1,26 +1,27 @@
+require("./expectExtensions.test.js");
+
 const ScooterApp = require("../src/ScooterApp")
 const Scooter = require("../src/Scooter")
 const User = require("../src/User")
 
 const Stations = require("../src/Stations.json")
 
-let stationsObj = {}
-for (let station of Stations) {
-    stationsObj[station] = []
-}
-
 describe('Check ScooterApp class', () => {
     it('should have a static scooterSessions array', () => {
-        expect(ScooterApp.scooterSessions).toEqual([])
+        expect(ScooterApp.scooterSessions).toBeAnArray("array")
     });
     it('a new instance of ScooterApp should be added to the scooterSessions array', () => {
         let app = new ScooterApp()
-        expect(ScooterApp.scooterSessions).toEqual([app])
+        expect(ScooterApp.scooterSessions).toContainEqual(app)
     });
 });
 
 describe('Check ScooterApp object', () => {
     let app = new ScooterApp()
+    let stationsObj = {}
+    for (let station of Stations) {
+        stationsObj[station] = []
+    }
 
     it('should have a stations property which is an object of arrays and station names', () => {
         expect(app.stations).toEqual(stationsObj)
@@ -34,9 +35,9 @@ describe('Test register and login methods', () => {
     let app = new ScooterApp()
 
     describe('Register method', () => {
-        it('should return “too young to register!” if user is under the age of 18', () => {
+        it('should return "too young to register!" if user is under the age of 18', () => {
             let user = new User("John", "abc12345", 17)
-            expect(app.register(user)).toBe("“too young to register!”")
+            expect(app.register(user)).toBe("too young to register!")
         });
         it('should add userdata to the registeredUsers property when successfully registering', () => {
             let user = new User("Sam", "abc12345", 20)

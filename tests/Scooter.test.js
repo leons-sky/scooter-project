@@ -1,4 +1,4 @@
-require("./expectExtensions.js");
+require("./expectExtensions.test.js");
 
 const Scooter = require("../src/Scooter")
 const User = require("../src/User")
@@ -50,6 +50,7 @@ describe('Test scooter renting and docking', () => {
             expect(scooter.rent()).toBe("Scooter low on battery, please charge.")
         });
         it('should return "Scooter is broken, please send a repair request." if scooter is broken', () => {
+            scooter.charge = 100
             scooter.isBroken = true
             expect(scooter.rent()).toBe("Scooter is broken, please send a repair request.")
         });

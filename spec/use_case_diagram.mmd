@@ -1,0 +1,35 @@
+flowchart TD
+    USER((User))
+    USER --> R1
+    USER --> L1
+    USER --> RENT
+    RENT -.->|Enjoy the ride!| USER
+    L1 -.->|Successful login| USER
+    USER --> DOCK
+    DOCK --> SA1
+    RENT --> SR1
+    SR1 -.- STATION
+    SA1 -.- STATION
+    subgraph app [ScooterApp]
+        R1[Register]:::func
+        USERS(Registered Users)
+        R1 -->|Add user| USERS
+        L1[Login]:::func
+        L1 -.- USERS
+        STATIONS(Stations)
+        SA1[Add scooter]:::func
+        SA1 -->|Add scooter| STATIONS
+        SR1[Remove scooter]:::func
+        SR1 -->|Remove scooter| STATIONS
+    end
+    subgraph scooter [Scooter]
+        STATION(Station)
+        SUSER(User)
+        RENT[Rent]:::func
+        DOCK[Dock]:::func
+        RENT -->|Set user| SUSER
+        DOCK -->|Remove user| SUSER
+    end
+
+    classDef func fill:lightblue
+    classDef proc fill:lime
